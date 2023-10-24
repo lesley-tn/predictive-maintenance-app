@@ -1,4 +1,8 @@
-// app global css in SCSS form
+// app global css in SCSS format
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
     .sidebar {
         background: linear-gradient(#E65300, #EA0029);
         
