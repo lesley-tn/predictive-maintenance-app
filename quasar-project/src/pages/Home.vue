@@ -22,37 +22,37 @@
       </div>
     </div>
 
-    <!-- search bar -->
-    <div class="q-pa-md">
-      <q-input
-        outlined
-        dense
-        placeholder="Search"
-        class="q-mb-md"
-        v-model="search"
-      />
+    <div class="flex">
+      <!-- search bar -->
+      <div class="q-pa-md flex-grow">
+        <q-input
+          outlined
+          dense
+          placeholder="Search"
+          class="q-mb-md"
+          v-model="search"
+        />
+      </div>
+
+  <!-- toggle button for client and buildings -->
+      <div class="q-pa-md">
+        <q-btn-toggle
+          v-model="secondModel"
+          spread
+          class="clients-buildings-toggle"
+          no-caps
+          rounded
+          unelevated
+          toggle-color="red"
+          
+          text-color="black"
+          :options="[
+            {label: 'Clients', value: 'one'},
+            {label: 'Buildings', value: 'two'}
+          ]"
+        />
+      </div>
     </div>
-
- <!-- toggle button for client and buildings -->
-    <div class="q-pa-md">
-      <q-btn-toggle
-        v-model="secondModel"
-        spread
-        class="clients-buildings-toggle"
-        no-caps
-        rounded
-        unelevated
-        toggle-color="red"
-        
-        text-color="black"
-        :options="[
-          {label: 'Clients', value: 'one'},
-          {label: 'Buildings', value: 'two'}
-        ]"
-      />
-    </div>
-
-
 
       <!-- display client or building names in q-card section in a 2x5 grid -->
       <div class="q-pa-md">
