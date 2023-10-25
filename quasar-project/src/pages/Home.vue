@@ -2,16 +2,22 @@
   <div>
     <h3 class="q-pl-lg">Overview</h3>
     <div class="q-pa-md overview-row">
-      <div class="row">
-        <div class="col">
-          <div>Total Clients: {{ totalClients }}</div>
-        </div>
-        <div class="col">
-          <div>Total Buildings: {{ totalBuildings }}</div>
-        </div>
-        <div class="col">
-          <div>Total Projects: {{ totalProjects }}</div>
-        </div>
+      <div class="grid grid-cols-3 gap-4">
+        <overview-card
+          :number="totalClients"
+          text="total clients"
+          icon="/icons/ic-person.svg"
+        />
+        <overview-card
+          :number="totalBuildings"
+          text="total buildings"
+          icon="/icons/ic-building.svg"
+        />
+        <overview-card
+          :number="totalProjects"
+          text="total projects"
+          icon="/icons/ic-kanban.svg"
+        />
       </div>
     </div>
 
@@ -86,77 +92,71 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { supabase } from '../assets/supabase';
+import OverviewCard from 'src/components/OverviewCard.vue';
 
 export default {
-  name: 'HomePage',
-  setup() {
-    const totalClients = ref(0);
-    const totalBuildings = ref(0);
-    const totalProjects = ref(0);
-    const Clients_name = ref([]);
-    const clients = ref([]);
-    const buildings = ref([]);
-    const infoDialog = ref(false);
-    const selectedInfo = ref(null);
-    const secondModel = ref('one'); // 'one' for Clients, 'two' for Buildings
-
-    const fetchData = async () => {
-      const { data: clientsData, error: clientsError } = await supabase
-        .from('Clients')
-        .select('*');
-
-      const { data: buildingsData, error: buildingsError } = await supabase
-        .from('Buildings')
-        .select('*');
-
-      const { data: projects, error: projectsError } = await supabase
-        .from('MaintenanceProjects')
-        .select('Project_id');
-
-      if (!clientsError) {
-        totalClients.value = clientsData.length;
-        Clients_name.value = clientsData.map((client) => client.Clients_name);
-        clients.value = clientsData;
-      }
-      if (!buildingsError) {
-        totalBuildings.value = buildingsData.length;
-        buildings.value = buildingsData;
-      }
-      if (!projectsError) totalProjects.value = projects.length;
-    };
-
-    const showInfoDialog = (info) => {
-      selectedInfo.value = info;
-      infoDialog.value = true;
-    };
-
-    const closeInfoDialog = () => {
-      infoDialog.value = false;
-    };
-
-    const formatAddress = (building) => {
-      return `${building.Building_street} ${building.Building_streetNumber}, ${building.Building_zipCode}, ${building.Building_city}`;
-    };
-
-    onMounted(() => {
-      fetchData();
-    });
-
-    return {
-      totalClients,
-      totalBuildings,
-      totalProjects,
-      Clients_name,
-      clients,
-      buildings,
-      showInfoDialog,
-      closeInfoDialog,
-      infoDialog,
-      selectedInfo,
-      secondModel,
-      formatAddress,
-    };
-  },
+    name: 'HomePage',
+    setup() {
+        const totalClients = ref(0);
+        const totalBuildings = ref(0);
+        const totalProjects = ref(0);
+        const Clients_name = ref([]);
+        const clients = ref([]);
+        const buildings = ref([]);
+        const infoDialog = ref(false);
+        const selectedInfo = ref(null);
+        const secondModel = ref('one'); // 'one' for Clients, 'two' for Buildings
+        const fetchData = async () => {
+            const { data: clientsData, error: clientsError } = await supabase
+                .from('Clients')
+                .select('*');
+            const { data: buildingsData, error: buildingsError } = await supabase
+                .from('Buildings')
+                .select('*');
+            const { data: projects, error: projectsError } = await supabase
+                .from('MaintenanceProjects')
+                .select('Project_id');
+            if (!clientsError) {
+                totalClients.value = clientsData.length;
+                Clients_name.value = clientsData.map((client) => client.Clients_name);
+                clients.value = clientsData;
+            }
+            if (!buildingsError) {
+                totalBuildings.value = buildingsData.length;
+                buildings.value = buildingsData;
+            }
+            if (!projectsError)
+                totalProjects.value = projects.length;
+        };
+        const showInfoDialog = (info) => {
+            selectedInfo.value = info;
+            infoDialog.value = true;
+        };
+        const closeInfoDialog = () => {
+            infoDialog.value = false;
+        };
+        const formatAddress = (building) => {
+            return `${building.Building_street} ${building.Building_streetNumber}, ${building.Building_zipCode}, ${building.Building_city}`;
+        };
+        onMounted(() => {
+            fetchData();
+        });
+        return {
+            totalClients,
+            totalBuildings,
+            totalProjects,
+            Clients_name,
+            clients,
+            buildings,
+            showInfoDialog,
+            closeInfoDialog,
+            infoDialog,
+            selectedInfo,
+            secondModel,
+            formatAddress,
+        };
+    },
+    components: { OverviewCard }
 };
 </script>
 
