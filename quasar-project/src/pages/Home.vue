@@ -52,6 +52,10 @@
           ]"
         />
       </div>
+      <div class="q-pa-md">
+        <dataInputButton @refresh-event="refreshPage()"/>
+      </div>
+
     </div>
 
       <!-- display client or building names in q-card section in a 2x5 grid -->
@@ -85,9 +89,14 @@
           <p v-if="selectedInfo">
             {{ secondModel === 'one' ? 'Client ID' : 'Building ID' }}: {{ secondModel === 'one' ? selectedInfo.Clients_id : selectedInfo.Buildings_id }}
           </p>
-          <p v-if="selectedInfo">Phone Number: {{ selectedInfo.Phone_number }}</p>
+
           <p v-if="selectedInfo">
-            {{ secondModel === 'one' ? 'Address' : 'Building Address' }}: {{ formatAddress(selectedInfo) }}
+            {{ secondModel === 'one' ? 'Phone number' : 'Client ID' }}: {{ secondModel === 'one' ? selectedInfo.Phone_number : selectedInfo.Clients_id }}
+          </p>
+          
+          
+          <p v-if="selectedInfo">
+            {{ secondModel === 'one' ? 'Address' : 'Building Address' }}: {{  secondModel === 'one' ? formatClientAddress(selectedInfo): formatBuildingAddress(selectedInfo) }}
           </p>
         </q-card-section>
         <q-card-actions align="right">
@@ -104,9 +113,21 @@
 import { ref, onMounted } from 'vue';
 import { supabase } from '../assets/supabase';
 import OverviewCard from 'src/components/OverviewCard.vue';
+import dataInputButton from '../components/DataInput.vue';
 
 export default {
+
     name: 'HomePage',
+
+    methods:{
+        refreshPage(){
+          // location.reload();
+          console.log("REFRESGIN")
+        }
+
+    },
+
+
     setup() {
         const totalClients = ref(0);
         const totalBuildings = ref(0);
@@ -147,9 +168,13 @@ export default {
         const closeInfoDialog = () => {
             infoDialog.value = false;
         };
-        const formatAddress = (building) => {
+        const formatBuildingAddress = (building) => {
             return `${building.Building_street} ${building.Building_streetNumber}, ${building.Building_zipCode}, ${building.Building_city}`;
         };
+
+        const formatClientAddress = (client) => {
+      return `${client.Address_StreetName} ${client.Address_HouseNumber}, ${client.Address_Zipcode}, ${client.Address_City}`;
+    };
         onMounted(() => {
             fetchData();
         });
@@ -166,10 +191,15 @@ export default {
             selectedInfo,
             search,
             secondModel,
-            formatAddress,
+            formatClientAddress,
+            formatBuildingAddress,
+            dataInputButton,
         };
     },
-    components: { OverviewCard }
+    components: { 
+      OverviewCard,
+      dataInputButton,
+     }
 };
 </script>
 
