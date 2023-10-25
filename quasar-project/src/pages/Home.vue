@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="px-6 py-8">
     <h3 class="q-pl-lg">Overview</h3>
+    <!-- overview -->
     <div class="q-pa-md overview-row">
       <div class="grid grid-cols-3 gap-4">
         <overview-card
@@ -20,6 +21,7 @@
         />
       </div>
     </div>
+    
 
  <!-- toggle button for client and buildings -->
     <div class="q-pa-md">
@@ -42,25 +44,24 @@
 
 
 
-      <!-- Display client or building names in q-card section in a 2x5 grid -->
+      <!-- display client or building names in q-card section in a 2x5 grid -->
       <div class="q-pa-md">
       
-      <div class="row q-gutter-md">
-        <!-- Loop to generate 10 q-card elements -->
-        <div
-          class="col-2 q-mb-md"
+      <div class="grid grid-cols-5 gap-4">
+        <!-- loop to generate all infos -->
+        <button
+          class="border border-lnf-navy rounded-xl px-5 py-4 hover:bg-lnf-navy/5 duration-100 text-left"
           v-for="(info, index) in (secondModel === 'one' ? clients : buildings)"
           :key="index"
+          @click="showInfoDialog(info)"
         >
-          <q-card @click="showInfoDialog(info)">
-            <q-card-section v-if="info">
-              {{ secondModel === 'one' ? info.Clients_name : info.Building_name }}
-            </q-card-section>
-            <q-card-section v-else>
-              <!-- Empty card -->
-            </q-card-section>
-          </q-card>
-        </div>
+          <p v-if="info">
+            {{ secondModel === 'one' ? info.Clients_name : info.Building_name }}
+          </p>
+          <div v-else>
+            <!-- Empty card -->
+          </div>
+        </button>
       </div>
     </div>
 

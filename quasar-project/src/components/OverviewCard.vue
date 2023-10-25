@@ -1,8 +1,8 @@
 <template>
-  <div class="flex rounded-xl px-6 py-4 bg-slate-100 justify-between">
+  <div class="flex rounded-xl px-8 py-6 bg-slate-100 justify-between">
     <!-- info -->
     <p>
-      <span class="text-heading text-3xl block mb-1">{{ number }}</span>
+      <span class="text-heading text-3xl block mb-2">{{ number }}</span>
       <span>{{ text }}</span>
     </p>
     <!-- icon -->
