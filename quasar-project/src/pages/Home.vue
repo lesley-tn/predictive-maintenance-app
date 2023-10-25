@@ -21,7 +21,17 @@
         />
       </div>
     </div>
-    
+
+    <!-- search bar -->
+    <div class="q-pa-md">
+      <q-input
+        outlined
+        dense
+        placeholder="Search"
+        class="q-mb-md"
+        v-model="search"
+      />
+    </div>
 
  <!-- toggle button for client and buildings -->
     <div class="q-pa-md">
@@ -48,10 +58,10 @@
       <div class="q-pa-md">
       
       <div class="grid grid-cols-5 gap-4">
-        <!-- loop to generate all infos -->
+        <!-- loop to generate all infos, filter by search -->
         <button
           class="border border-lnf-navy rounded-xl px-5 py-4 hover:bg-lnf-navy/5 duration-100 text-left"
-          v-for="(info, index) in (secondModel === 'one' ? clients : buildings)"
+          v-for="(info, index) in secondModel === 'one' ? clients.filter((client) => client.Clients_name.toLowerCase().includes(search.toLowerCase())) : buildings.filter((building) => building.Building_name.toLowerCase().includes(search.toLowerCase()))"
           :key="index"
           @click="showInfoDialog(info)"
         >
@@ -106,6 +116,7 @@ export default {
         const buildings = ref([]);
         const infoDialog = ref(false);
         const selectedInfo = ref(null);
+        const search = ref('');
         const secondModel = ref('one'); // 'one' for Clients, 'two' for Buildings
         const fetchData = async () => {
             const { data: clientsData, error: clientsError } = await supabase
@@ -153,6 +164,7 @@ export default {
             closeInfoDialog,
             infoDialog,
             selectedInfo,
+            search,
             secondModel,
             formatAddress,
         };
