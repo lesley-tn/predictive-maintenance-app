@@ -76,10 +76,10 @@
       const clientOptions = ref([]);
   
       const fetchClientOptions = async () => {
-        const { data, error } = await supabase.from('Clients').select('Clients_id');
+        const { data, error } = await supabase.from('Clients').select('*');
         if (!error) {
           clientOptions.value = data.map((client) => ({
-            label: client.Clients_id.toString(),
+            label: client.Clients_name,
             value: parseInt(client.Clients_id.toString()),
           }));
         }
