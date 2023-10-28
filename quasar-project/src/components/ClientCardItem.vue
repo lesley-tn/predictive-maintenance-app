@@ -13,36 +13,45 @@
   </button>
 
 
-        <q-dialog v-model="infoDialog">
+    <q-dialog v-model="infoDialog">
     
       <q-card>
-            <q-card-section>
-              <h4>
-                {{item.Clients_name }}
-              </h4>
-              <p >
-                Client ID: {{ item.Clients_id  }}
-              </p>
+        <q-card-section>
+          <h4>
+            {{item.Clients_name }}
+
+             
+          </h4>
+          <q-btn
+              v-if="!editing"
+              @click="startEditing"
+              icon="edit"
+              class="edit-button"
+              />
+          <p >
+            Client ID: {{ item.Clients_id  }}
+          </p>
     
-              <p >
-               Phone number: {{ item.Phone_number }}
-              </p>
+          <p >
+            Phone number: {{ item.Phone_number }}
+          </p>
     
-              <p >
-              Address: {{ fullStreetName }}
-              </p>
-            </q-card-section>
+          <p >
+            Address: {{ fullAddress }}
+          </p>
+          
+        </q-card-section>
             <!-- Buildings button in client information-->
-            <q-card-actions class="q-pa-md">
-              <q-btn
+          <q-card-actions class="q-pa-md">
+            <q-btn
               label="Buildings"
               v-on:click="go_to_client_buildings()"  
      
               style="text-transform: none;"
             />
-            </q-card-actions>
+          </q-card-actions>
     
-            <q-card-actions align="right">
+          <q-card-actions align="right">
               <q-btn label="Close" color="primary" @click="infoDialog = false" />
             </q-card-actions>
           </q-card>
@@ -66,7 +75,7 @@
     },
 
         setup(props) {
-          const fullStreetName = props.item.Address_StreetName + " " + props.item.Address_HouseNumber + ", " +  props.item.Address_Zipcode + ", " + props.item.Address_City
+          const fullAddress = props.item.Address_StreetName + " " + props.item.Address_HouseNumber + ", " +  props.item.Address_Zipcode + ", " + props.item.Address_City
 
             const infoDialog = ref(false);
             
@@ -75,7 +84,7 @@
             return {
             props,
             infoDialog,
-            fullStreetName,
+            fullAddress,
 
         };
         }
@@ -96,3 +105,11 @@
     buildings.filter((building) => building.Building_name.toLowerCase().includes(search.toLowerCase()))
     
     " -->
+
+
+    <style scoped>
+.edit-button {
+  margin-left: auto; /* Push the button to the right side */
+}
+</style>
+    

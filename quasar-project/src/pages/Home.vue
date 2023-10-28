@@ -168,18 +168,23 @@ export default {
         
         watch(search, (newSearch) => {
 
-        clientsToShow.value = clients.value.filter((client) => {
+
           
+        clientsToShow.value = clients.value.filter((client) => {
 
           if (newSearch.toLowerCase().split(" ").length > 1 && newSearch.toLowerCase().split(" ")[1] != null) {
-            
-
+        
           if (newSearch.toLowerCase().includes('building') ) {
           // Specific case when "building" is included in the search
     
           return (
             client.Clients_id.toString().toLowerCase().includes(get_clients_id_from_building_id(parseInt(newSearch.toLowerCase().split(" ")[1]).toString())) 
           );
+          } else if (newSearch.toLowerCase().includes('client')){
+            return (
+            client.Clients_id.toString().toLowerCase().includes(newSearch.toLowerCase().split(" ")[1]) 
+          );
+
           }
 
         
@@ -200,6 +205,7 @@ export default {
 watch(search, (newSearch) => {
   buildingsToShow.value = buildings.value.filter((building) => {
     const search_term = newSearch.toLowerCase();
+    console.log("HEREHEREHERHEH")
 
     if (search_term.startsWith('building')) {
       const buildingId = parseInt(search_term.substring(8)); // Extract the ID after 'building'

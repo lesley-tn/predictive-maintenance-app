@@ -16,9 +16,9 @@
          <q-dialog v-model="infoDialog">
      
        <q-card>
-             <q-card-section>
+             <q-card-section class="q-pa-md">
                <h4>
-                 {{item.Clients_name }}
+                 {{item.Building_name }}
                </h4>
                <p >
                  Building ID: {{ item.Buildings_id  }}
@@ -26,6 +26,10 @@
      
                <p >
                 Client ID: {{ item.Clients_id }}
+               </p>
+
+               <p >
+                Building Address: {{ fullBuildingAddress }}
                </p>
      
              
@@ -65,7 +69,7 @@
      },
  
          setup(props) {
-             
+            const fullBuildingAddress = props.item.Building_street + " " + props.item.Building_streetNumber + ", " +  props.item.Building_zipCode + ", " + props.item.Building_city
              const infoDialog = ref(false);
              
              
@@ -74,6 +78,7 @@
              return {
             
              infoDialog,
+             fullBuildingAddress,
  
          };
          }
