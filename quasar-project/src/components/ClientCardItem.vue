@@ -139,6 +139,7 @@
 
 
     },
+  
 
         setup(props) {
           const fullAddress = props.item.Address_StreetName + ' ' + props.item.Address_HouseNumber + ', '  +  props.item.Address_Zipcode + ', '+ props.item.Address_City 
@@ -158,22 +159,25 @@
             editing,
             editedItem,
                   
-        }
-        }
+        };
+      }
+    };
 
     
-    };
-  </script>
     
-<!-- 
-    ? 
+  
+
+</script>
+
+<!--
+    ?
     // IF CLIENTS SELECTED
     clients.filter((client) => client.Clients_name.toLowerCase().includes(search.toLowerCase()))
-    
+
     // .filter((buiilding) => buildingsData.Clients_id.includes(s))
-    
-    : 
+
+    :
     // IF BUILDINGS SELECTED
     buildings.filter((building) => building.Building_name.toLowerCase().includes(search.toLowerCase()))
-    
+
     " -->

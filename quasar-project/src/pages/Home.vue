@@ -1,5 +1,10 @@
 <template>
   <div class="px-6 py-8">
+    <img
+      src="/Logo_Lenferink.png"
+      alt="logo"
+      class="h-[10vh] absolute bottom-4 right-10 opacity-20 -z-10"
+    />
     <h3 class="q-pl-lg">Overview</h3>
     <!-- overview -->
     <div class="q-pa-md overview-row">
@@ -25,7 +30,6 @@
     <div class="flex">
       <!-- search bar -->
       <div class="q-pa-md flex-grow">
-        
         <q-input
           outlined
           dense
@@ -49,42 +53,34 @@
           text-color="black"
           :options="[
             { label: 'Clients', value: 'one' },
-            { label: 'Buildings', value: 'two' }
+            { label: 'Buildings', value: 'two' },
           ]"
         />
       </div>
       <div class="q-pa-md">
-        <dataInputButton @refresh-event="refreshPage()"/>
+        <dataInputButton @refresh-event="refreshPage()" />
       </div>
-
-      
     </div>
-    
+
     <!-- display client or building names in q-card section in a 2x5 grid -->
     <div class="q-pa-md" v-if="toggle === 'one'">
       <div class="grid grid-cols-5 gap-4">
-        
-      
-        <ClientCardItem 
-        v-for="client in clientsToShow" 
-
-        v-bind:key="client.Clients_id"
-        :item="client"
-        @exit_card="receivedEmitFromCard"
-         />
-      
+        <ClientCardItem
+          v-for="client in clientsToShow"
+          v-bind:key="client.Clients_id"
+          :item="client"
+          @exit_card="receivedEmitFromCard"
+        />
       </div>
     </div>
 
     <div class="q-pa-md" v-if="toggle === 'two'">
       <div class="grid grid-cols-5 gap-4">
-        
-        <BuildingCardItem 
-        v-for="building in buildingsToShow" 
-        v-bind:key="building.Buildings_id"
-        :item="building"
-         />
-      
+        <BuildingCardItem
+          v-for="building in buildingsToShow"
+          v-bind:key="building.Buildings_id"
+          :item="building"
+        />
       </div>
     </div>
    

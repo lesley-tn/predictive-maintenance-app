@@ -14,7 +14,7 @@
             <q-tab-panel name="clients">
               <div>
                 <!-- Clients Data Input Form -->
-                <q-input label="Clients Name" v-model="clientsData.name"  :rules="[val => val.length > 0 || 'Cannot be empty' ]"/>
+                <q-input label="Clients Name" v-model="clientsData.name" />
                 <q-input label="Phone Number" v-model="clientsData.phone" />
                 <q-input label="Street Name" v-model="clientsData.streetName" />
                 <q-input label="House Number" v-model="clientsData.houseNumber" />
@@ -30,7 +30,7 @@
                   v-model="buildingsData.clientId"
                   :options="clientOptions"
                 />
-                <q-input label="Building Name" v-model="buildingsData.name" :rules="[val => val.length > 0 || 'Cannot be empty' ]"/>
+                <q-input label="Building Name" v-model="buildingsData.name" />
                 <q-input label="Street" v-model="buildingsData.street" />
                 <q-input label="Street Number" v-model="buildingsData.streetNumber" />
                 <q-input label="Zip Code" v-model="buildingsData.zipCode" />
@@ -112,7 +112,7 @@
             }
           });
         } else {
-            
+            console.log("asdasdasdasd")
           // Prepare the data to be inserted
           const dataToInsert = {
             Clients_id: buildingsData.value.clientId.value,
@@ -123,7 +123,7 @@
             Building_zipCode: buildingsData.value.zipCode,
             Building_description: buildingsData.value.description,
           };
-         
+          console.log(buildingsData.value.clientId)
           // Insert data into the 'Buildings' table
          
           supabase.from('Buildings').upsert([dataToInsert]).then((response) => {
@@ -134,53 +134,49 @@
               closeDataInputDialog();
             }
           });
-        }
-      };
-  
-      const showDataInputDialog = () => {
-        dialogVisible.value = true;
-      };
-  
-      const closeDataInputDialog = () => {
-        dialogVisible.value = false;
-        clientsData.value = {
-          name: '',
-          phone: '',
-          streetName: '',
-          houseNumber: '',
-          city: '',
-          zipCode: '',
-        };
-        buildingsData.value = {
-          clientId: '',
-          name: '',
-          street: '',
-          streetNumber: '',
-          city: '',
-          zipCode: '',
-          description: '',
-        };
-      };
-      
-      const emitRefreshPage = () => {
-        // this.$emit('refresh-event');
+      }
     };
 
-      return {
-        dialogVisible,
-        selectedTab,
-        clientsData,
-        buildingsData,
-        clientOptions,
-        saveData,
-        showDataInputDialog,
-        closeDataInputDialog,
-        emitRefreshPage,
-        
-      };
-    },
+    const showDataInputDialog = () => {
+      dialogVisible.value = true;
+    };
 
- 
-  };
-  </script>
-  
+    const closeDataInputDialog = () => {
+      dialogVisible.value = false;
+      clientsData.value = {
+        name: '',
+        phone: '',
+        streetName: '',
+        houseNumber: '',
+        city: '',
+        zipCode: '',
+      };
+      buildingsData.value = {
+        clientId: '',
+        name: '',
+        street: '',
+        streetNumber: '',
+        city: '',
+        zipCode: '',
+        description: '',
+      };
+    };
+
+    const emitRefreshPage = () => {
+      // this.$emit('refresh-event');
+    };
+
+    return {
+      dialogVisible,
+      selectedTab,
+      clientsData,
+      buildingsData,
+      clientOptions,
+      saveData,
+      showDataInputDialog,
+      closeDataInputDialog,
+      emitRefreshPage,
+    };
+  },
+};
+</script>

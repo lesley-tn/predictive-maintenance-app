@@ -3,50 +3,56 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
 
-    .sidebar {
-        background: linear-gradient(#E65300, #EA0029);
-        
-      
-      }
+.sidebar {
+  background: linear-gradient(#e65300, #ea0029);
+}
 
-    h1, h2, h3, h4, h5, h6, .text-heading {
-      @apply text-lnf-navy;
-      font-family: Ubuntu;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal; 
-    }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.text-heading {
+  @apply text-lnf-navy;
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
 
-    :root, html, p {
-      @apply text-lnf-navy;
-      font-family: Ubuntu;
-      font-style: normal;
-      font-weight: normal;
-      line-height: normal;
-    }
+:root,
+html,
+p {
+  @apply text-lnf-navy;
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+}
 
-    h1 {
-      font-size: 39px;
-    }
+h1 {
+  font-size: 39px;
+}
 
-    h2 {
-      font-size: 33px;
-    }
+h2 {
+  font-size: 33px;
+}
 
-    h3 {
-      font-size: 28px;
-    }
+h3 {
+  font-size: 28px;
+}
 
-    h4 {
-      font-size: 24px;
-    }
+h4 {
+  font-size: 24px;
+}
 
-    h5 {
-      font-size: 20px;
-    }
+h5 {
+  font-size: 20px;
+}
 
-    h6 {
-      font-size: 18px;
-    }
+h6 {
+  font-size: 18px;
+}

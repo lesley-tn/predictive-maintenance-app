@@ -1,6 +1,6 @@
 <template>
-    <!-- loop to generate all infos, filter by search -->
-    <div class="q-pa-md q-gutter-sm">
+  <!-- loop to generate all infos, filter by search -->
+  <div>
     <button
            class="border border-lnf-navy rounded-xl px-5 py-4 hover:bg-lnf-navy/5 duration-100 text-left"
      
@@ -164,11 +164,11 @@
      ? 
      // IF CLIENTS SELECTED
      clients.filter((client) => client.Clients_name.toLowerCase().includes(search.toLowerCase()))
-     
+
      // .filter((buiilding) => buildingsData.Clients_id.includes(s))
-     
-     : 
+
+     :
      // IF BUILDINGS SELECTED
      buildings.filter((building) => building.Building_name.toLowerCase().includes(search.toLowerCase()))
-     
+
      " -->
