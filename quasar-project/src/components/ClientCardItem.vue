@@ -7,7 +7,7 @@
           @click="infoDialog = true"
         >
           <p>
-            {{ editedItem.Clients_name }}
+            {{ item.Clients_name }}
           </p>
           
   </button>
@@ -20,7 +20,7 @@
         <template v-if="!editing">
           <div class="row justify-between">
             <h4>
-              <span >{{ editedItem.Clients_name }}</span>
+              <span >{{ editedItem.Clients_name}}</span>
             </h4>
             <q-btn
               v-if="!editing"

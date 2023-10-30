@@ -14,7 +14,10 @@
             <q-tab-panel name="clients">
               <div>
                 <!-- Clients Data Input Form -->
-                <q-input label="Clients Name" v-model="clientsData.name" />
+                <q-input label="Clients Name" 
+                  v-model="clientsData.name" 
+                  :rules="[val => val.length > 0 || 'Cannot be empty']"
+                  hide-bottom-space />
                 <q-input label="Phone Number" v-model="clientsData.phone" />
                 <q-input label="Street Name" v-model="clientsData.streetName" />
                 <q-input label="House Number" v-model="clientsData.houseNumber" />
@@ -30,7 +33,11 @@
                   v-model="buildingsData.clientId"
                   :options="clientOptions"
                 />
-                <q-input label="Building Name" v-model="buildingsData.name" />
+                <q-input 
+                  label="Building Name" 
+                  v-model="buildingsData.name" 
+                  :rules="[val => val.length > 0 || 'Cannot be empty']"
+                  hide-bottom-space />
                 <q-input label="Street" v-model="buildingsData.street" />
                 <q-input label="Street Number" v-model="buildingsData.streetNumber" />
                 <q-input label="Zip Code" v-model="buildingsData.zipCode" />
