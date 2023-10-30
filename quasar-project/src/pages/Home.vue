@@ -87,25 +87,7 @@
       
       </div>
     </div>
-    <!-- Dialog to show client or building information -->
    
-
-       <!-- Dialog to show building information -->
-       <q-dialog v-model="BuildingInfoDialog">
-  <q-card>
-    <q-card-section>
-      <h4>Building for {{ selectedInfo.Clients_name }}</h4>
-      <ul>
-        <li v-for="buildingName in buildingNames" :key="buildingName">
-          {{ buildingName }}
-        </li>
-      </ul>
-    </q-card-section>
-    <q-card-actions align="right">
-      <q-btn label="Close" color="primary" @click="closeBuildingInfoDialog"  />
-    </q-card-actions>
-  </q-card>
-</q-dialog>
 
   </div>
 </template>
@@ -151,7 +133,7 @@ export default {
         const totalClients = ref(0);
         const totalBuildings = ref(0);
         const totalProjects = ref(0);
-        const Clients_name = ref([]);
+
 
         const clients = ref([]);
         const buildings = ref([]);
@@ -166,36 +148,30 @@ export default {
         const clientsBuildings = ref([])
         const BuildingInfoDialog = ref(false);
         
-        watch(search, (newSearch) => {
-
-
-          
-        clientsToShow.value = clients.value.filter((client) => {
+        watch(search, (newSearch) => {  
+          clientsToShow.value = clients.value.filter((client) => {
 
           if (newSearch.toLowerCase().split(" ").length > 1 && newSearch.toLowerCase().split(" ")[1] != null) {
-        
-          if (newSearch.toLowerCase().includes('building') ) {
+            if (newSearch.toLowerCase().includes('building') ) {
           // Specific case when "building" is included in the search
     
-          return (
-            client.Clients_id.toString().toLowerCase().includes(get_clients_id_from_building_id(parseInt(newSearch.toLowerCase().split(" ")[1]).toString())) 
-          );
-          } else if (newSearch.toLowerCase().includes('client')){
-            return (
-            client.Clients_id.toString().toLowerCase().includes(newSearch.toLowerCase().split(" ")[1]) 
-          );
+              return (
+                client.Clients_id.toString().toLowerCase().includes(get_clients_id_from_building_id(parseInt(newSearch.toLowerCase().split(" ")[1]).toString())) 
+              );
+            } else if (newSearch.toLowerCase().includes('client')){
+              return (
+                client.Clients_id.toString().toLowerCase().includes(newSearch.toLowerCase().split(" ")[1]) 
+              );
+            }
 
-          }
-
-        
           } else {
 
-          return (
-            client.Clients_name.toLowerCase().includes(newSearch.toLowerCase()) ||
-            client.Clients_id.toString().toLowerCase().includes(newSearch.toLowerCase()) 
-          );
+            return (
+              client.Clients_name.toLowerCase().includes(newSearch.toLowerCase()) ||
+              client.Clients_id.toString().toLowerCase().includes(newSearch.toLowerCase()) 
+            );
         
-      }
+            }
     // Normal filtering for Clients_id and Clients_name
   });
 });
@@ -205,7 +181,7 @@ export default {
 watch(search, (newSearch) => {
   buildingsToShow.value = buildings.value.filter((building) => {
     const search_term = newSearch.toLowerCase();
-    console.log("HEREHEREHERHEH")
+    
 
     if (search_term.startsWith('building')) {
       const buildingId = parseInt(search_term.substring(8)); // Extract the ID after 'building'
@@ -241,12 +217,9 @@ watch(search, (newSearch) => {
             if (!clientsError) {
               
                 totalClients.value = clientsData.length;
-
-                Clients_name.value = clientsData.map((client) => client.Clients_name);
-
                 clients.value = clientsData;
                 clientsToShow.value = clientsData;
-                console.log(clients.value)
+                
             }
             if (!buildingsError) {
                 totalBuildings.value = buildingsData.length;
@@ -279,13 +252,7 @@ watch(search, (newSearch) => {
         const closeInfoDialog = () => {
             infoDialog.value = false;
         };
-        const formatBuildingAddress = (building) => {
-            return `${building.Building_street} ${building.Building_streetNumber}, ${building.Building_zipCode}, ${building.Building_city}`;
-        };
-
-        const formatClientAddress = (client) => {
-      return `${client.Address_StreetName} ${client.Address_HouseNumber}, ${client.Address_Zipcode}, ${client.Address_City}`;
-    };
+       
 
    
     
@@ -300,7 +267,7 @@ watch(search, (newSearch) => {
             totalClients,
             totalBuildings,
             totalProjects,
-            Clients_name,
+            
             clients,
             buildings,
             showInfoDialog,
@@ -309,8 +276,6 @@ watch(search, (newSearch) => {
             selectedInfo,
             search,
             toggle,
-            formatClientAddress,
-            formatBuildingAddress,
             dataInputButton,
 
             clientsBuildings,
