@@ -13,7 +13,7 @@
    </button>
  
  
- <q-dialog v-model="infoDialog">
+ <q-dialog v-model="infoDialog" @hide="editing=false">
      
   <q-card>
     <q-card-section class="q-pa-md">
