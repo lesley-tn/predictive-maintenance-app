@@ -14,7 +14,7 @@
 
 
   <q-dialog v-model="infoDialog" @hide="editing=false">
-    <q-card class="test">
+    <q-card>
       <q-card-section class="q-pa-md">
 
         <template v-if="!editing">

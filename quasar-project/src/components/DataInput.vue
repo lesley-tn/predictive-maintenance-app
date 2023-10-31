@@ -1,7 +1,7 @@
 <template>
     <div>
       <q-btn @click="showDataInputDialog" label="Input Data" />
-      <q-dialog v-model="dialogVisible">
+      <q-dialog v-model="DataInputDialog">
         <q-card>
           <h4>
             Input Data
@@ -61,7 +61,7 @@
   
   export default {
     setup() {
-      const dialogVisible = ref(false);
+      const DataInputDialog = ref(false);
       const selectedTab = ref('clients');
       const clientsData = ref({
         name: '',
@@ -145,11 +145,11 @@
     };
 
     const showDataInputDialog = () => {
-      dialogVisible.value = true;
+      DataInputDialog.value = true;
     };
 
     const closeDataInputDialog = () => {
-      dialogVisible.value = false;
+      DataInputDialog.value = false;
       clientsData.value = {
         name: '',
         phone: '',
@@ -174,7 +174,7 @@
     };
 
     return {
-      dialogVisible,
+      DataInputDialog,
       selectedTab,
       clientsData,
       buildingsData,
