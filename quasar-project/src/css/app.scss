@@ -56,3 +56,7 @@ h5 {
 h6 {
   font-size: 18px;
 }
+
+.button {
+  @apply bg-lnf-navy/10 text-lnf-navy backdrop-blur text-body font-medium rounded-xl;
+}

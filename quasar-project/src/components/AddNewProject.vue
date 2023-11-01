@@ -4,9 +4,8 @@
       @click="AddNewProject = true"
       icon="add"
       label="New Project"
-      rounded
       flat
-      class="bg-lnf-navy/10 text-lnf-navy backdrop-blur text-body font-medium"
+      class="button"
     />
 
     <q-dialog v-model="AddNewProject">
