@@ -1,18 +1,26 @@
 <template>
-    <div>
-      <h1>Financial Reports</h1>
-      <p>Here are some financial reports:</p>
-      <ul>
-        <li>Report 1</li>
-        <li>Report 2</li>
-        <li>Report 3</li>
-      </ul>
+  <div>
+    <h1>Financial Reports</h1>
+    <!-- chart -->
+    <div class="h-screen w-full">
+      <Doughnut :data="data" :options="options" />
     </div>
+  </div>
 </template>
-  
+
 <script>
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'vue-chartjs';
+import * as chartConfig from 'src/config/chartConfig';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 export default {
   name: 'FinancialReportsPage',
+  components: {
+    Doughnut,
+  },
+  data() {
+    return chartConfig;
+  },
 };
 </script>
-  
