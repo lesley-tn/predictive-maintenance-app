@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div class="p-8 relative">
     <h1>Projects</h1>
-   
-    <AddNewProject align="right" />
+    <AddNewProject class="fixed top-10 right-8" />
     <!-- Loop through and use ProjectCard for each project -->
-    <project-card v-for="project in projects" :key="project.id" :project="project" />
-
+    <project-card
+      v-for="project in projects"
+      :key="project.id"
+      :project="project"
+    />
   </div>
 </template>
 
@@ -44,33 +46,39 @@ export default {
           projects.value = projectsData.map((project) => {
             // You can further process project data here
             // For instance, calculate the number of tasks in different statuses
-            const tasks = projectTasksData.filter((task) => task.projectId === project.id);
-    
-            const todoTasks = tasks.filter((task) => task.Task_status === 'To Do').length;
-            const inProgressTasks = tasks.filter((task) => task.Task_status === 'In Progress').length;
-            const completedTasks = tasks.filter((task) => task.Task_status === 'Completed').length;
+            const tasks = projectTasksData.filter(
+              (task) => task.projectId === project.id
+            );
+
+            const todoTasks = tasks.filter(
+              (task) => task.Task_status === 'To Do'
+            ).length;
+            const inProgressTasks = tasks.filter(
+              (task) => task.Task_status === 'In Progress'
+            ).length;
+            const completedTasks = tasks.filter(
+              (task) => task.Task_status === 'Completed'
+            ).length;
 
             return {
               ...project,
               todoTasks,
-    inProgressTasks,
-    completedTasks,
+              inProgressTasks,
+              completedTasks,
             };
-          }
-          );
+          });
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-    
+
     onMounted(() => {
       fetchData();
     });
 
     return {
       projects,
-      
     };
   },
 };

@@ -25,11 +25,11 @@ h6,
 
 :root,
 html,
-p {
+p,
+.text-body {
   @apply text-lnf-navy;
   font-family: Ubuntu;
   font-style: normal;
-  font-weight: normal;
   line-height: normal;
 }
 

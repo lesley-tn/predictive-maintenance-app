@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-between items-center py-4 px-8 border-b border-lnf-navy/20"
+    class="flex justify-between items-center py-4 border-b border-lnf-navy/20"
   >
     <div>
       <h2>{{ project.Project_id }}</h2>
