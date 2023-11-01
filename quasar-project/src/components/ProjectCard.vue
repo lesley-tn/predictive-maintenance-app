@@ -26,11 +26,13 @@ export default {
     Doughnut,
   },
   data(props) {
+    console.log(props.project.completedTasks)
     return {
       data: {
         labels: ['To do', 'In progress', 'Completed'],
         datasets: [
           {
+            label: 'Dataset',
             data: [
               props.project.todoTasks,
               props.project.inProgressTasks,
@@ -38,7 +40,7 @@ export default {
             ],
             backgroundColor: ['#EA0029', '#233977', '#10B116'],
             pointStyle: 'circle',
-          },
+          }
         ],
       },
       options: {
@@ -52,5 +54,6 @@ export default {
       },
     };
   },
+  
 };
 </script>

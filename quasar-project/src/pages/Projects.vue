@@ -40,14 +40,15 @@ export default {
         const { data: projectTasksData, error: tasksError } = await supabase
           .from('ProjectTasks')
           .select('*');
-
-        if (!buildingsError && !projectsError && !tasksError) {
+          
+        console.log(projectTasksData)
+          if (!buildingsError && !projectsError && !tasksError) {
           // Process your data here and populate the projects array
-          projects.value = projectsData.map((project) => {
+          projects.value = projectsData.map((project) => { 
             // You can further process project data here
             // For instance, calculate the number of tasks in different statuses
             const tasks = projectTasksData.filter(
-              (task) => task.projectId === project.id
+              (task) => task.Project_id === project.Project_id
             );
 
             const todoTasks = tasks.filter(
