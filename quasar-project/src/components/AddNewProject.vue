@@ -42,11 +42,12 @@
   </template>
   
   <script>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, toRaw } from 'vue';
   import { supabase } from '../assets/supabase';
   
   export default {
     name: 'AddNewProject',
+   
     setup() {
       const AddNewProject = ref(false);
       const ProjectData = ref({
@@ -61,6 +62,7 @@
         const { data: buildings, error } = await supabase
           .from('Buildings')
           .select('Buildings_id, Clients_id');
+
         if (!error) {
           const clientIds = [...new Set(buildings.map((building) => building.Clients_id))];
           const buildingIds = [...new Set(buildings.map((building) => building.Buildings_id))];
@@ -81,33 +83,49 @@
         fetchSelectedIds();
       });
   
-      const AddProject = async () => {
-        
-          const { data, error } = await supabase
-            .from('MaintenanceProjects')
-            .upsert([{
-              Project_name: ProjectData.value.name,
-              Clients_id: ProjectData.value.clientId,
-              Buildings_id: ProjectData.value.buildingId,
-              Project_description: ProjectData.value.description,
-        }])
-            .select();
-  
-          AddNewProject.value = false;
-          if (!error) {
-            AddNewProject.value = false;
-          }
-        
-      };
+      
   
       return {
         AddNewProject,
         ProjectData,
         SelectedBuildingsId,
         SelectedClientsId,
-        AddProject,
+        
+       
       };
     },
+    methods: {
+        // Method only used to convert array to update database
+        convertToArray(input) {
+
+            let output_ids = []
+
+            for (let i = 0; i < input.length; i++) {
+     
+             output_ids.push(input[i].value)
+            }
+        return output_ids
+},
+
+async  AddProject(){
+ 
+  const { data, error } = await supabase
+    .from('MaintenanceProjects')
+    .upsert([{
+      Project_name: this.ProjectData.name,
+      Clients_id: this.ProjectData.clientId.value,
+      Buildings_id: this.convertToArray(toRaw(this.ProjectData.buildingId)),
+      Project_description: this.ProjectData.description,
+}])
+    .select();
+
+  this.AddNewProject = false;
+  if (!error) {
+    this.AddNewProject = false;
+  }
+
+}
+},
   };
   </script>
   
