@@ -1,12 +1,12 @@
 <template>
   <div>
-    <button
+    <q-btn
       @click="showDataInputDialog"
-      class="flex gap-2 items-center rounded-xl border-2 border-lnf-navy h-full px-4 py-2"
-    >
-      <img src="/icons/ic-plus.svg" alt="plus icon" class="h-5 w-5" />
-      <p class="font-medium">Input data</p>
-    </button>
+      icon="add"
+      label="Input data"
+      flat
+      class="button h-full"
+    />
     <q-dialog v-model="DataInputDialog">
       <q-card>
         <h4>Input Data</h4>
