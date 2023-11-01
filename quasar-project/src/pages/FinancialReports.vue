@@ -14,6 +14,11 @@ import { Doughnut } from 'vue-chartjs';
 import * as chartConfig from 'src/config/chartConfig';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
+
+const fetchData = async () => {
+  console.log('fetch data. not implemented yet.');
+};
+
 export default {
   name: 'FinancialReportsPage',
   components: {

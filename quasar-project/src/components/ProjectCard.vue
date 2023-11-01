@@ -1,45 +1,55 @@
 <template>
-    <q-card>
-        
-      <q-card-section>
-        <h2>{{ project.Project_id }}</h2>
-        <p>{{ project.Clients_id }}</p>
-      </q-card-section>
-      <q-card-section>
-    
-      </q-card-section>
-    </q-card>
-  </template>
-  
-  <script type="module">
-  import { onMounted } from 'vue';
+  <div class="flex justify-between">
+    <q-card-section>
+      <h2>{{ project.Project_id }}</h2>
+      <p>{{ project.Clients_id }}</p>
+    </q-card-section>
+    <div class="h-24 aspect-square">
+      <Doughnut :data="data" :options="options" />
+    </div>
+  </div>
+</template>
 
-  
-  export default {
-    props: {
-      project: Object,
-    },
-    
+<script type="module">
+import { Chart as ChartJS, ArcElement, Legend } from 'chart.js';
+import { Doughnut } from 'vue-chartjs';
 
-    setup(props) {
+ChartJS.register(ArcElement, Legend);
 
-  
-      return {
-        sections: [
-          { label: 'Red section', value: props.project.todoTasks, color: 'red' },
-          { label: 'Green section', value: 25, color: 'green' },
-          { label: 'Blue section', value: 25, color: 'blue' }
+export default {
+  props: {
+    project: Object,
+  },
+  components: {
+    Doughnut,
+  },
+  data(props) {
+    return {
+      data: {
+        labels: ['To do', 'In progress', 'Completed'],
+        datasets: [
+          {
+            label: 'My First Dataset',
+            data: [
+              props.project.todoTasks,
+              props.project.inProgressTasks,
+              props.project.completedTasks,
+            ],
+            backgroundColor: ['#EA0029', '#233977', '#10B116'],
+            hoverOffset: 4,
+          },
         ],
-    
-      };
-    },
-    components: {
-    
-    },
-    
-    
-  };
-  </script>
-
-  
-  
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right',
+          },
+        },
+      },
+    };
+  },
+};
+</script>
