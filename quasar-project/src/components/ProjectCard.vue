@@ -3,8 +3,8 @@
     class="flex justify-between items-center py-4 border-b border-lnf-navy/20"
   >
     <div>
-      <h2>{{ project.Project_id }}</h2>
-      <p>{{ project.Clients_id }}</p>
+      <h2>{{ project.Project_name }}</h2>
+      <p>{{ project.Project_description }}</p>
     </div>
     <div class="h-24">
       <Doughnut :data="data" :options="options" />
