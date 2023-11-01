@@ -1,10 +1,12 @@
 <template>
-  <div class="flex justify-between">
-    <q-card-section>
+  <div
+    class="flex justify-between items-center py-4 px-8 border-b border-lnf-navy/20"
+  >
+    <div>
       <h2>{{ project.Project_id }}</h2>
       <p>{{ project.Clients_id }}</p>
-    </q-card-section>
-    <div class="h-24 aspect-square">
+    </div>
+    <div class="h-24">
       <Doughnut :data="data" :options="options" />
     </div>
   </div>
@@ -29,14 +31,13 @@ export default {
         labels: ['To do', 'In progress', 'Completed'],
         datasets: [
           {
-            label: 'My First Dataset',
             data: [
               props.project.todoTasks,
               props.project.inProgressTasks,
               props.project.completedTasks,
             ],
             backgroundColor: ['#EA0029', '#233977', '#10B116'],
-            hoverOffset: 4,
+            pointStyle: 'circle',
           },
         ],
       },
