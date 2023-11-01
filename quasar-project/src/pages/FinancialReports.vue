@@ -11,7 +11,6 @@
 <script>
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'vue-chartjs';
-import * as chartConfig from 'src/config/chartConfig';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -25,7 +24,7 @@ export default {
     Doughnut,
   },
   data() {
-    return chartConfig;
+    return {};
   },
 };
 </script>
