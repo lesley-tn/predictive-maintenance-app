@@ -8,7 +8,7 @@
       class="button"
     />
 
-    <q-dialog v-model="AddNewProject">
+    <q-dialog v-model="AddNewProject" >
       <q-card>
         <q-card-section>
           <div>
@@ -21,7 +21,7 @@
             <q-select
               label="Buildings ID"
               v-model="ProjectData.buildingId"
-              :options="SelectedBuildingsId"
+              :options="get_SelectedBuildingsId(ProjectData.clientId)"
               multiple
               v-if="ProjectData.clientId"
             />
@@ -58,32 +58,35 @@ export default {
 
     const SelectedClientsId = ref([]);
     const SelectedBuildingsId = ref([]);
+    const buildings = ref ([])
 
     const fetchSelectedIds = async () => {
-      const { data: buildings, error } = await supabase
+      const { data: buildings_obtained, error } = await supabase
         .from('Buildings')
         .select('Buildings_id, Clients_id');
 
       if (!error) {
         const clientIds = [
-          ...new Set(buildings.map((building) => building.Clients_id)),
+          ...new Set(buildings_obtained.map((building) => building.Clients_id)),
         ];
-        const buildingIds = [
-          ...new Set(buildings.map((building) => building.Buildings_id)),
-        ];
-
+       
         SelectedClientsId.value = clientIds.map((clientId) => ({
           label: clientId,
           value: clientId,
         }));
+          console.log(buildings)
+        
+          buildings.value = buildings_obtained
 
-        SelectedBuildingsId.value = buildingIds.map((buildingId) => ({
-          label: buildingId,
-          value: buildingId,
-        }));
+        // SelectedBuildingsId.value = buildingIds.map((buildingId) => ({
+        //   label: buildingId,
+        //   value: buildingId,
+        // }));
+          
       }
     };
-
+    
+    
     onMounted(() => {
       fetchSelectedIds();
     });
@@ -93,6 +96,7 @@ export default {
       ProjectData,
       SelectedBuildingsId,
       SelectedClientsId,
+      buildings,
     };
   },
   methods: {
@@ -105,6 +109,20 @@ export default {
       }
       return output_ids;
     },
+
+    get_SelectedBuildingsId(client_id) {
+      console.log("LOOKING FOR IDS FIR CLIENT")
+      console.log(client_id)
+  const filteredBuildingIds = this.buildings
+    .filter(building => building.Clients_id === client_id.value)
+    .map(building => ({
+      label: building.Buildings_id,
+      value: building.Buildings_id
+    }));
+
+  return filteredBuildingIds;
+},
+
 
     async AddProject() {
       const { data, error } = await supabase

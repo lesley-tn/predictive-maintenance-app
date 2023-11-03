@@ -1,13 +1,21 @@
 <template>
   <div class="p-8 relative">
     <h1>Projects</h1>
+    <div class="q-pt-md q-gutter-md">
+    <q-badge rounded style ="background-color: #EA0029; color"  label="TO DO" />
+    <q-badge rounded style ="background-color: #F2A200" label="IN PROGRESS" />
+    <q-badge rounded style ="background-color: #10B116" label="COMPLETED" />
+  </div>
     <AddNewProject class="fixed top-10 right-8" />
     <!-- Loop through and use ProjectCard for each project -->
+    <div class="q-pt-lg grid grid-cols-2 gap-8">
+   
     <project-card
       v-for="project in projects"
       :key="project.id"
       :project="project"
     />
+  </div>
   </div>
 </template>
 
@@ -66,6 +74,7 @@ export default {
               todoTasks,
               inProgressTasks,
               completedTasks,
+              tasks,
             };
           });
         }
