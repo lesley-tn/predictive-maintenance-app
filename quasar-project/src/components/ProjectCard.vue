@@ -24,8 +24,11 @@
             <h6>
               {{ project.Project_name }}
             </h6>
-            <q-btn @click="setInputsToReadonly()" icon="edit" />
-            
+            <q-btn v-if="this.inputsReadonly == true" @click="switchState()" icon="edit" />
+            <div class="">
+            <q-btn v-if="this.inputsReadonly == false"  @click="cancelUpdateTable()" icon="warning" />
+            <q-btn v-if="this.inputsReadonly == false"  @click="updateTable()" icon="check" />
+          </div>
           </div>
         </q-card-section>
 
@@ -35,12 +38,16 @@
          
 
           <div class="q-pa-md">
+
    <q-table
       :rows="rows"
       :columns="columns"
       
       :rows-per-page-options="[]"
       row-key="name"
+      bordered
+     
+      hide-bottom
     >
       <template v-slot:body="props">
         <q-tr :props="props">
@@ -98,6 +105,8 @@
 import { ref } from 'vue';
 import { Chart as ChartJS, ArcElement, Legend } from 'chart.js';
 import { Doughnut } from 'vue-chartjs';
+import { supabase } from '../assets/supabase';
+import _ from 'lodash';
 
 
 
@@ -110,26 +119,31 @@ export default {
   components: {
     Doughnut,
   },
-  data(props) {
-    console.log(props.project.completedTasks)
-    
-    
-    
 
-    const rows = ref([])
+
+ 
+  data(props) {
+    
+    const originalRows = [];
+
 
     for (let i = 0; i< props.project.tasks.length; i++) {
-      console.log("adding")
+      
       let row_to_add = {
-        
+        Task_id: props.project.tasks[i].ProjectTasks_id, 
         Task_name: props.project.tasks[i].Task_name,  
         Expect_Start_Date: props.project.tasks[i].Expected_start_date, 
         Expected_Due: props.project.tasks[i].Expect_end_Date,
         Cost: props.project.tasks[i].Task_cost,
         Status: props.project.tasks[i].Task_status
       }
-      rows.value.push(row_to_add)
+      
+      originalRows.push({ ...row_to_add });
     }
+    console.log("SET VALUE OF ORIGINAL ROWS")
+
+    const rows = _.cloneDeep(originalRows);
+
 
     const columns = [
      {name: 'Task Name', label:'Task Name',  align: 'left',},
@@ -172,12 +186,16 @@ export default {
       },
       rows,
       columns,
-      inputsReadonly: false,
+      inputsReadonly: true,
+      originalRows
     };
   },
 
-  setup(){
+  setup(props){
   
+
+
+    
 
     return{
       projectDialog: ref(false),
@@ -185,15 +203,53 @@ export default {
   },
 
   methods: {
-
-    setInputsToReadonly() {
+    cancelUpdateTable(){
+      this.rows = _.cloneDeep(this.originalRows);
       this.inputsReadonly = true;
     },
-    setInputsToEditable() {
-      this.inputsReadonly = false;
-    },
-  },
 
+    switchState() {
+         // Toggle inputsReadonly between true and false
+      this.inputsReadonly = !this.inputsReadonly;
+
+      if (this.inputsReadonly) {
+        // If inputsReadonly is true, restore rows to their original state
+        this.rows = [...this.originalRows];
+      }
+      
+    },
+
+    async updateTable(){
+      
+      for (const row of this.rows) {
+        // Prepare the update data for each row
+        const updateData = {
+          Task_name: row.Task_name,
+          // Define your update data here based on the row values
+        };
+
+        const { data, error } = await supabase
+          .from('ProjectTasks')
+          .update(updateData)
+          .eq('ProjectTasks_id', row.Task_id) // Adjust as needed to match your criteria
+          .select();
+
+          
+        
+        if (error) {
+          // Handle the error for this row if needed
+          console.error(`Error updating row: ${error.message}`);
+        } else {
+
+          this.inputsReadonly = true;
+        }
+       
+          
+        
+    }
+  }
+  },
+ 
   
 };
 </script>
