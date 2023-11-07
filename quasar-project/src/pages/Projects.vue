@@ -48,8 +48,8 @@ export default {
         const { data: projectTasksData, error: tasksError } = await supabase
           .from('ProjectTasks')
           .select('*');
-          
-        console.log(projectTasksData)
+    
+        
           if (!buildingsError && !projectsError && !tasksError) {
           // Process your data here and populate the projects array
           projects.value = projectsData.map((project) => { 
@@ -75,6 +75,7 @@ export default {
               inProgressTasks,
               completedTasks,
               tasks,
+              
             };
           });
         }
