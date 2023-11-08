@@ -63,17 +63,17 @@
       </q-item>
     </router-link>
 
-    <router-link to="/FinancialReports" v-slot="{ navigate }"  style="text-decoration: none; color: inherit;">
+    <router-link to="/UploadFile" v-slot="{ navigate }"  style="text-decoration: none; color: inherit;">
       <q-item
         clickable
         v-ripple
         @click="navigate"
       >
         <q-item-section avatar>
-          <q-icon name="trending_up" />
+          <q-icon name="upload_file" />
         </q-item-section>
         <q-item-section>
-          Financial Report
+          Upload File
         </q-item-section>
       </q-item>
     </router-link>

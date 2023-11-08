@@ -6,7 +6,7 @@
         @click="projectDialog = true"
       >
       <div >
-        <h2 class="q-pb-lg q-mx-md">{{ project.Project_name }}</h2>
+        <h2 class="q-pb-lg q-mx-md" align="center">{{ project.Project_name }}</h2>
 
       
       <div class="h-24">
@@ -23,7 +23,8 @@
             <h6>
               {{ project.Project_name }}
             </h6>
-            <div>
+            
+            <!-- <div>
             <q-btn v-if="this.inputsReadonly == true" @click="switchState()" icon="edit" />
             <div>
             <q-btn v-if="this.inputsReadonly == false"  @click="cancelUpdateTable()" icon="close" />
@@ -32,7 +33,7 @@
             <q-btn v-if="this.inputsReadonly == false"  @click="deleteSelection()" icon="delete" />
             
             </div>
-          </div>
+          </div> -->
         </div>
         </q-card-section>
 
@@ -42,7 +43,7 @@
    
 
           <div class="q-pa-md">
-          
+           
    <q-table
       :rows="rows"
       :columns="columns"
@@ -56,7 +57,18 @@
  
      
     >
-    
+   
+    <template v-slot:top>
+   
+            <q-btn v-if="this.inputsReadonly == true" @click="switchState()" icon="edit" />
+         
+            <q-btn v-if="this.inputsReadonly == false"  @click="cancelUpdateTable()" icon="close" />
+            <q-btn v-if="this.inputsReadonly == false"  @click="updateTable()" icon="check" />
+
+            <q-btn v-if="this.inputsReadonly == false && this.selected.length > 0"  @click="deleteSelection()" icon="delete" />
+            
+      </template>
+
       <template v-slot:body="props"> 
         <q-tr :props="props">
           <q-th style="width: 1em" v-if="!this.inputsReadonly">
@@ -129,17 +141,18 @@
         </q-tr>
         
       </template>
-
- 
-    </q-table>
-  </div>
+      <template v-slot:bottom>
+        
+          
        
-        </q-card-section>
-
-        <q-separator />
-        <div class="row q-pa-md justify-around">
-        <q-input  v-if="addingRow" v-model="newRow.name" dense autofocus counter  />
-        <q-input  v-if="addingRow"  v-model="newRow.start_date" dense autofocus > 
+        <q-tr   v-if="this.addingRow" >
+          
+          <q-td >
+            <q-input  v-if="addingRow" v-model="newRow.name" dense autofocus counter label="Task Name" :rules="[(val) => val.length > 0 || 'Cannot be empty']"
+              hide-bottom-space />
+          </q-td>
+          <q-td >
+            <q-input  v-if="addingRow"  v-model="newRow.start_date" dense autofocus label="Expected Start Date"> 
                
                <template v-slot:prepend>
                   <q-icon name="event" class="cursor-pointer">
@@ -154,8 +167,9 @@
                </template>
 
              </q-input>
-
-        <q-input  v-if="addingRow" v-model="newRow.end_date" dense autofocus > 
+          </q-td>
+          <q-td >
+            <q-input  v-if="addingRow" v-model="newRow.end_date" dense autofocus label="Expected Due"> 
                
                <template v-slot:prepend>
                   <q-icon name="event" class="cursor-pointer">
@@ -171,10 +185,79 @@
 
              </q-input>
 
-             <q-input   v-if="addingRow" type="number" v-model="newRow.cost" dense autofocus />
-             <q-select  v-if="addingRow" v-model="newRow.status" dense autofocus :options="statusOptions"/>
+          </q-td>
+          <q-td >
+            <q-input   v-if="addingRow" type="number" v-model="newRow.cost" dense autofocus label="Cost"/>
+          </q-td>
+          <q-td >
+            <q-select  v-if="addingRow" v-model="newRow.status" dense autofocus :options="statusOptions" label="Status"
+              :rules="[(val) => val.length > 0 || 'Cannot be empty']"
+              hide-bottom-space
+              />
+          </q-td>
+
+          
+
+        </q-tr>
+        <q-td >
+          <q-btn flat rounded @click="addingRow ? confirmAddRow() : addRow()" :icon="addingRow ? 'check' : 'add'" :label="addingRow ? 'Confirm' : 'Add Row'" />
+
+          </q-td>
+
+          <q-td v-if="addingRow"  >
+            <q-btn flat rounded  @click="this.addingRow = false" icon="close" label="Cancel" />
+          </q-td>
+      </template>
+
+ 
+    </q-table>
+  </div>
+       
+        </q-card-section>
+
+        <q-separator />
+        <!-- <div class="row q-pa-md justify-between">
+        <q-input  v-if="addingRow" v-model="newRow.name" dense autofocus counter label="Task Name" :rules="[(val) => val.length > 0 || 'Cannot be empty']"
+              hide-bottom-space />
+        <q-input  v-if="addingRow"  v-model="newRow.start_date" dense autofocus label="Expected Start Date"> 
+               
+               <template v-slot:prepend>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                      <q-date v-model="newRow.start_date" mask="YYYY-MM-DD">
+                        <div class="row items-center justify-end">
+                          <q-btn v-close-popup label="Close" color="primary" flat />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+               </template>
+
+             </q-input>
+
+        <q-input  v-if="addingRow" v-model="newRow.end_date" dense autofocus label="Expected Due"> 
+               
+               <template v-slot:prepend>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                      <q-date v-model="newRow.end_date" mask="YYYY-MM-DD">
+                        <div class="row items-center justify-end">
+                          <q-btn v-close-popup label="Close" color="primary" flat />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+               </template>
+
+             </q-input>
+
+             <q-input   v-if="addingRow" type="number" v-model="newRow.cost" dense autofocus label="Cost"/>
+             <q-select  v-if="addingRow" v-model="newRow.status" dense autofocus :options="statusOptions" label="Status"
+              :rules="[(val) => val.length > 0 || 'Cannot be empty']"
+              hide-bottom-space
+              />
              <q-btn  v-if="addingRow"  @click="confirmAddRow()" icon="add" />
-            </div>
+            </div> -->
         <q-card-actions align="right" class="items-end">
           <q-btn flat label="close" color="primary" v-close-popup />
         </q-card-actions>
@@ -209,6 +292,7 @@ export default {
   const originalRows = [];
   const selected = ref([]);
   const isSelectionEnabled = ref(false)
+  
   // const selectAll = ref(false);
   // const selectAllRows = () => {
   //     if (selectAll.value) {
@@ -293,6 +377,7 @@ export default {
       project_id,
       selected,
       isSelectionEnabled,
+      
       // selectAllRows,
       // selectAll,
 
@@ -328,6 +413,10 @@ export default {
           { Task_name: this.newRow.name,
           Task_status: this.newRow.status,
           Project_id: this.project_id,
+          Expected_start_date: this.newRow.start_date,
+          Expected_end_date: this.newRow.end_date,
+          Task_cost: this.newRow.cost,
+
         },
         ])
         .select();
@@ -363,12 +452,13 @@ export default {
       this.addingRow = false;
       this.isSelectionEnabled = false;
     },
+    
 
     switchState() {
          // Toggle inputsReadonly between true and false
          console.log("Switching")
       this.inputsReadonly = !this.inputsReadonly;
-this.isSelectionEnabled  =  !this.isSelectionEnabled
+      this.isSelectionEnabled  =  !this.isSelectionEnabled
    
 
       if (this.inputsReadonly) {
@@ -407,6 +497,7 @@ this.isSelectionEnabled  =  !this.isSelectionEnabled
         } else {
 
           this.inputsReadonly = true;
+          this.isSelectionEnabled  =  false;
         }
        
           

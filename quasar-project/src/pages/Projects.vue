@@ -8,7 +8,7 @@
   </div>
     <AddNewProject class="fixed top-10 right-8" />
     <!-- Loop through and use ProjectCard for each project -->
-    <div class="q-pt-lg grid grid-cols-2 gap-8">
+    <div class="q-pt-lg grid grid-cols-3 gap-8">
    
     <project-card
       v-for="project in projects"
