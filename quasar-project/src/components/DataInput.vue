@@ -8,11 +8,7 @@
       class="button h-full"
     />
     <q-dialog v-model="DataInputDialog">
-      <q-card
-        class="p-8 min-w-[50%] rounded-xl"
-        flat
-        style="border-radius: 0.75rem"
-      >
+      <q-card class="dialog-card" flat style="border-radius: 0.75rem">
         <h4 class="mb-4">Input Data</h4>
         <q-tabs v-model="selectedTab">
           <q-tab name="clients" label="Clients" class="text-body" />

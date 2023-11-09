@@ -10,36 +10,55 @@
       </p>
     </button>
 
-    <q-dialog v-model="infoDialog" @hide="editing = false">
-      <q-card>
-        <q-card-section class="q-pa-md">
+    <q-dialog v-model="infoDialog" @hide="editing = false" flat>
+      <q-card flat class="dialog-card" style="border-radius: 0.75rem">
+        <q-card-section>
+          <q-card-actions class="absolute right-0 top-0">
+            <q-btn icon="close" flat @click="infoDialog = false" />
+          </q-card-actions>
           <template v-if="!editing">
-            <div class="row justify-between">
+            <div class="row items-end gap-2 mb-4">
               <h4>
-                <span>{{ editedItem.Clients_name }}</span>
+                {{ editedItem.Clients_name }}
               </h4>
-              <q-btn v-if="!editing" @click="startEditing" icon="edit" />
+              <div class="flex mb-1 opacity-40 items-end">
+                <img src="/icons/ic-id.svg" class="mr-1 h-5 w-5" />
+                <p class="text-lg leading-none">ID: {{ item.Clients_id }}</p>
+              </div>
             </div>
-            <p>Client ID: {{ item.Clients_id }}</p>
-            <p>Phone Number: {{ item.Phone_number }}</p>
-            <p>Address: {{ fullAddress }}</p>
-
-            <!-- Buildings button in client information-->
-            <q-card-actions class="q-pa-md">
-              <q-btn
-                label="Buildings"
-                @click="go_to_client_buildings()"
-                style="text-transform: none"
-              />
-            </q-card-actions>
-
-            <q-card-actions align="right">
-              <q-btn
-                label="Close"
-                color="primary"
-                @click="infoDialog = false"
-              />
-            </q-card-actions>
+            <div class="flex flex-col gap-2">
+              <div class="flex">
+                <img src="/icons/ic-phone.svg" class="mr-1 h-4 w-4" />
+                <p>{{ item.Phone_number }}</p>
+              </div>
+              <div class="flex">
+                <img src="/icons/ic-map.svg" class="mr-1 h-4 w-4" />
+                <p>{{ fullAddress }}</p>
+              </div>
+            </div>
+            <div class="flex flex-nowrap gap-4 mt-8">
+              <button
+                v-if="!editing"
+                @click="startEditing"
+                class="button-red-outline flex items-center justify-center w-1/2 h-12"
+              >
+                <img src="/icons/ic-edit.svg" class="mr-2 h-5 w-5" />
+                <p>Edit Details</p>
+              </button>
+              <!-- Buildings button in client information-->
+              <q-card-actions class="w-1/2 p-0">
+                <button
+                  @click="go_to_client_buildings()"
+                  class="flex items-center justify-center button-red w-full h-12"
+                >
+                  <img
+                    src="/icons/ic-building-white.svg"
+                    class="mr-2 h-5 w-5"
+                  />
+                  <p>Go to Buildings</p>
+                </button>
+              </q-card-actions>
+            </div>
           </template>
 
           <template v-else>

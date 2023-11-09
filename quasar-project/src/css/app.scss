@@ -16,18 +16,20 @@ h4,
 h5,
 h6,
 .text-heading {
-  @apply text-lnf-navy;
   font-family: Ubuntu;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
 
+:root {
+  @apply text-lnf-navy;
+}
+
 :root,
 html,
 p,
 .text-body {
-  @apply text-lnf-navy;
   font-family: Ubuntu;
   font-style: normal;
   line-height: normal;
@@ -58,5 +60,17 @@ h6 {
 }
 
 .button {
-  @apply bg-lnf-navy/10 text-lnf-navy backdrop-blur text-body font-medium rounded-xl;
+  @apply bg-lnf-navy/10 text-lnf-navy backdrop-blur text-body font-medium rounded-xl uppercase py-3 px-6;
+}
+
+.button-red {
+  @apply border-2 border-lnf-red bg-lnf-red rounded-xl text-white px-6 py-3 uppercase font-medium text-body;
+}
+
+.button-red-outline {
+  @apply border-2 border-lnf-red rounded-xl text-lnf-red px-6 py-3 uppercase font-medium text-body;
+}
+
+.dialog-card {
+  @apply p-8 min-w-[50%] rounded-xl;
 }
