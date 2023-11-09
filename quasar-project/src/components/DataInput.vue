@@ -8,14 +8,18 @@
       class="button h-full"
     />
     <q-dialog v-model="DataInputDialog">
-      <q-card>
-        <h4>Input Data</h4>
+      <q-card
+        class="p-8 min-w-[50%] rounded-xl"
+        flat
+        style="border-radius: 0.75rem"
+      >
+        <h4 class="mb-4">Input Data</h4>
         <q-tabs v-model="selectedTab">
-          <q-tab name="clients" label="Clients" />
-          <q-tab name="buildings" label="Buildings" />
+          <q-tab name="clients" label="Clients" class="text-body" />
+          <q-tab name="buildings" label="Buildings" class="text-body" />
         </q-tabs>
         <q-tab-panels v-model="selectedTab">
-          <q-tab-panel name="clients">
+          <q-tab-panel name="clients" class="p-0">
             <div>
               <!-- Clients Data Input Form -->
               <q-input
@@ -23,50 +27,97 @@
                 v-model="clientsData.name"
                 :rules="[(val) => val.length > 0 || 'Cannot be empty']"
                 hide-bottom-space
+                class="text-body"
               />
-              <q-input label="Phone Number" v-model="clientsData.phone" />
-              <q-input label="Street Name" v-model="clientsData.streetName" />
-              <q-input label="House Number" v-model="clientsData.houseNumber" />
-              <q-input label="City" v-model="clientsData.city" />
-              <q-input label="Zip Code" v-model="clientsData.zipCode" />
+              <q-input
+                label="Phone Number"
+                v-model="clientsData.phone"
+                class="text-body"
+              />
+              <q-input
+                label="Street Name"
+                v-model="clientsData.streetName"
+                class="text-body"
+              />
+              <q-input
+                label="House Number"
+                v-model="clientsData.houseNumber"
+                class="text-body"
+              />
+              <q-input
+                label="City"
+                v-model="clientsData.city"
+                class="text-body"
+              />
+              <q-input
+                label="Zip Code"
+                v-model="clientsData.zipCode"
+                class="text-body"
+              />
             </div>
           </q-tab-panel>
-          <q-tab-panel name="buildings">
+          <q-tab-panel name="buildings" class="p-0">
             <div>
               <!-- Buildings Data Input Form -->
               <q-select
                 label="Clients ID"
                 v-model="buildingsData.clientId"
                 :options="clientOptions"
+                class="text-body"
               />
               <q-input
                 label="Building Name"
                 v-model="buildingsData.name"
                 :rules="[(val) => val.length > 0 || 'Cannot be empty']"
                 hide-bottom-space
+                class="text-body"
               />
-              <q-input label="Street" v-model="buildingsData.street" />
+              <q-input
+                label="Street"
+                v-model="buildingsData.street"
+                class="text-body"
+              />
               <q-input
                 label="Street Number"
                 v-model="buildingsData.streetNumber"
+                class="text-body"
               />
-              <q-input label="Zip Code" v-model="buildingsData.zipCode" />
-              <q-input label="City" v-model="buildingsData.city" />
+              <q-input
+                label="Zip Code"
+                v-model="buildingsData.zipCode"
+                class="text-body"
+              />
+              <q-input
+                label="City"
+                v-model="buildingsData.city"
+                class="text-body"
+              />
               <q-input
                 label="Description"
                 v-model="buildingsData.description"
+                class="text-body"
               />
             </div>
           </q-tab-panel>
         </q-tab-panels>
-        <q-card-actions align="right">
-          <q-btn label="Cancel" color="primary" @click="closeDataInputDialog" />
-          <q-btn
+        <q-card-actions align="right" class="mt-8 p-0 gap-4">
+          <button
+            label="Cancel"
+            class="border-2 border-lnf-red rounded-xl !text-lnf-red px-6 py-3 uppercase font-medium text-body"
+            flat
+            @click="closeDataInputDialog"
+          >
+            Cancel
+          </button>
+          <button
             label="Save"
-            color="primary"
+            class="border-2 border-lnf-red bg-lnf-red rounded-xl text-white px-6 py-3 uppercase font-medium text-body"
             @click="saveData"
+            flat
             v-on:click="$emit('refresh-event')"
-          />
+          >
+            Save
+          </button>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -206,7 +257,6 @@ export default {
       showDataInputDialog,
       closeDataInputDialog,
       emitRefreshPage,
-      
     };
   },
 };
