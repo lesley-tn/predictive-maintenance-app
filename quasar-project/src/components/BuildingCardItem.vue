@@ -10,34 +10,51 @@
       </p>
     </button>
 
-    <q-dialog v-model="infoDialog" @hide="editing = false">
-      <q-card>
-        <q-card-section class="q-pa-md">
+    <q-dialog v-model="infoDialog" @hide="editing = false" flat>
+      <q-card flat class="dialog-card" style="border-radius: 0.75rem">
+        <q-card-section>
+          <q-card-actions class="absolute right-0 top-0">
+            <q-btn icon="close" flat @click="closeDialogBox" />
+          </q-card-actions>
           <template v-if="!editing">
-            <div class="row justify-between">
+            <div class="row items-end gap-2 mb-4">
               <h4>
                 {{ item.Building_name }}
               </h4>
-              <q-btn v-if="!editing" @click="startEditing" icon="edit" />
+              <div class="flex mb-1 opacity-40 items-end">
+                <img src="/icons/ic-building.svg" class="mr-1 h-5 w-5" />
+                <p class="text-lg leading-none">ID: {{ item.Buildings_id }}</p>
+              </div>
             </div>
 
-            <p>Building ID: {{ item.Buildings_id }}</p>
+            <div class="flex flex-col gap-2">
+              <div class="flex">
+                <img src="/icons/ic-id.svg" class="mr-1 h-4 w-4" />
+                <p>Client ID {{ item.Clients_id }}</p>
+              </div>
 
-            <p>Client ID: {{ item.Clients_id }}</p>
+              <div class="flex">
+                <img src="/icons/ic-map.svg" class="mr-1 h-4 w-4" />
+                <p>{{ fullBuildingAddress }}</p>
+              </div>
 
-            <p>Building Address: {{ fullBuildingAddress }}</p>
-
-            <p
-              v-if="
-                item.Building_description &&
-                item.Building_description.trim() !== ''
-              "
+              <p
+                v-if="
+                  item.Building_description &&
+                  item.Building_description.trim() !== ''
+                "
+              >
+                Description: {{ item.Building_description }}
+              </p>
+            </div>
+            <button
+              v-if="!editing"
+              @click="startEditing"
+              class="button-red-outline flex items-center justify-center w-full h-12 mt-8"
             >
-              Description: {{ item.Building_description }}
-            </p>
-            <q-card-actions align="right">
-              <q-btn label="Close" color="primary" @click="closeDialogBox" />
-            </q-card-actions>
+              <img src="/icons/ic-edit.svg" class="mr-2 h-5 w-5" />
+              <p>Edit Details</p>
+            </button>
           </template>
 
           <template v-else>
