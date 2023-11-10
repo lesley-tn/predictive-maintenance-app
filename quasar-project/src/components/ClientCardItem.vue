@@ -62,29 +62,69 @@
           </template>
 
           <template v-else>
-            <q-input
-              v-model="editedItem.Clients_name"
-              label="Client Name"
-              :rules="[(val) => val.length > 0 || 'Cannot be empty']"
-              hide-bottom-space
-            />
+            <div class="py-8 flex flex-col gap-4">
+              <q-input
+                v-model="editedItem.Clients_name"
+                label="Client Name"
+                :rules="[(val) => val.length > 0 || 'Cannot be empty']"
+                hide-bottom-space
+                class="text-body"
+              />
 
-            <q-input v-model="editedItem.Phone_number" label="Phone number" />
-            <q-input
-              v-model="editedItem.Address_StreetName"
-              label="Street Name"
-            />
-            <q-input
-              v-model="editedItem.Address_HouseNumber"
-              label="House Number"
-            />
-            <q-input v-model="editedItem.Address_Zipcode" label="Zipcode" />
-            <q-input v-model="editedItem.Address_City" label="City" />
+              <q-input
+                v-model="editedItem.Phone_number"
+                label="Phone number"
+                class="text-body"
+              />
+              <q-input
+                v-model="editedItem.Address_StreetName"
+                label="Street Name"
+                class="text-body"
+              />
+              <q-input
+                v-model="editedItem.Address_HouseNumber"
+                label="House Number"
+                class="text-body"
+              />
+              <q-input
+                v-model="editedItem.Address_Zipcode"
+                label="Zipcode"
+                class="text-body"
+              />
+              <q-input
+                v-model="editedItem.Address_City"
+                label="City"
+                class="text-body"
+              />
+            </div>
 
-            <q-card-actions align="right">
-              <q-btn label="Save" color="primary" @click="update_client()" />
-              <q-btn label="Exit" color="primary" @click="editing = false" />
-              <q-btn label="Delete" color="red" @click="deleteClientData()" />
+            <q-card-actions class="flex gap-4 p-0" align="right">
+              <button
+                label="Exit"
+                color="primary"
+                @click="editing = false"
+                flat
+                class="button-red-outline"
+              >
+                Cancel
+              </button>
+              <button
+                label="Delete"
+                @click="deleteClientData()"
+                flat
+                class="button-red-outline"
+              >
+                Delete
+              </button>
+              <button
+                label="Save"
+                color="primary"
+                @click="update_client()"
+                flat
+                class="button-red"
+              >
+                Save
+              </button>
             </q-card-actions>
           </template>
         </q-card-section>

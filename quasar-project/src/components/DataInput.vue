@@ -5,7 +5,7 @@
       icon="add"
       label="Input data"
       flat
-      class="button h-full"
+      class="button-red h-full"
     />
     <q-dialog v-model="DataInputDialog">
       <q-card class="dialog-card" flat style="border-radius: 0.75rem">

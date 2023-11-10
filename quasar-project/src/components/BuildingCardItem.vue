@@ -58,29 +58,69 @@
           </template>
 
           <template v-else>
-            <q-input
-              v-model="editedItem.Building_name"
-              label="Building Name"
-              :rules="[(val) => val.length > 0 || 'Cannot be empty']"
-              hide-bottom-space
-            />
+            <div class="py-8 flex flex-col gap-4">
+              <q-input
+                v-model="editedItem.Building_name"
+                label="Building Name"
+                :rules="[(val) => val.length > 0 || 'Cannot be empty']"
+                hide-bottom-space
+                class="text-body"
+              />
 
-            <q-input v-model="editedItem.Building_street" label="Street Name" />
-            <q-input
-              v-model="editedItem.Building_streetNumber"
-              label="House Number"
-            />
-            <q-input v-model="editedItem.Building_zipCode" label="Zipcode" />
-            <q-input v-model="editedItem.Building_city" label="City" />
-            <q-input
-              v-model="editedItem.Building_description"
-              label="Description"
-            />
+              <q-input
+                v-model="editedItem.Building_street"
+                label="Street Name"
+                class="text-body"
+              />
+              <q-input
+                v-model="editedItem.Building_streetNumber"
+                label="House Number"
+                class="text-body"
+              />
+              <q-input
+                v-model="editedItem.Building_zipCode"
+                label="Zipcode"
+                class="text-body"
+              />
+              <q-input
+                v-model="editedItem.Building_city"
+                label="City"
+                class="text-body"
+              />
+              <q-input
+                v-model="editedItem.Building_description"
+                label="Description"
+                class="text-body"
+              />
+            </div>
 
-            <q-card-actions align="right">
-              <q-btn label="Save" color="primary" @click="update_building()" />
-              <q-btn label="Exit" color="primary" @click="editing = false" />
-              <q-btn label="Delete" color="red" @click="deleteBuildingData" />
+            <q-card-actions class="flex gap-4 p-0" align="right">
+              <button
+                label="Exit"
+                color="primary"
+                @click="editing = false"
+                flat
+                class="button-red-outline"
+              >
+                Cancel
+              </button>
+              <button
+                label="Delete"
+                @click="deleteBuildingData"
+                flat
+                class="button-red-outline"
+              >
+                Delete
+              </button>
+              <button
+                label="Save"
+                color="primary"
+                @click="update_building()"
+                flat
+                class="button-red"
+              >
+                Save
+              </button>
             </q-card-actions>
           </template>
         </q-card-section>
